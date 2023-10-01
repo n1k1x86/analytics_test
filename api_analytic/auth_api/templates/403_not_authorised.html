@@ -1,1 +1,8 @@
 <p>403 You're not authorised</p>
+<button onclick="goToLogin()">Go to login</button>
+
+<script>
+    let goToLogin = () =>{
+        window.location.href = document.location.protocol + '//' + document.location.host + '/login/';
+    }
+</script>
