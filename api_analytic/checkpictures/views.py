@@ -1,3 +1,5 @@
+import logging
+
 from .models import Post, PostReview, FavouritePost
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -11,6 +13,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PostSerializer, PostReviewSerializer
 from rest_framework.permissions import IsAuthenticated
+
+logger = logging.getLogger('default_logger')
 
 
 class HomePageView(APIView):

@@ -136,3 +136,22 @@ REST_FRAMEWORK = {
             'rest_framework.authentication.SessionAuthentication',
         ],
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'logfile': {
+            'class': 'logging.FileHandler',
+            'filename': 'server.log',
+        },
+        'console':{
+            'class':'logging.StreamHandler'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'logfile'],
+        },
+    },
+}
