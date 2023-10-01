@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+Gallery
+{% endblock %}
+
+{% block extra_head %}
+    <script src="/static/js/gallery_js/gallery.js"></script>
+  <link rel="stylesheet" href='/static/css/gallery_css/gallery.css' type="text/css">
+{% endblock %}
+
+
+{% block content %}
+<p>Hi, here's a gallery</p>
+{% for post in posts %}
+    <div>
+        <p>Title: <button id="{{ post.id }}" onclick="goToPost(this)">{{ post.title }}</button></p>
+        <p>Photo: <img src="{{ post.image }}"></p>
+        <p>Author: {{ post.author }}</p>
+    </div>
+
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+    <div class="container">
+        <form method="POST" id="id-login-form" class="panel-body">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <input type="submit" value="Sign In">
+        </form>
+    </div>
+{% endblock %}

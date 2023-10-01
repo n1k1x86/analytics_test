@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home page
+{% endblock %}
+
+{% block content %}
+<p>Hi, here's a home page</p>
+<p>Go to gallery</p>
+<button id="go_to_gallery" onclick="goToGallery()">
+    Go!
+</button>
+
+<script>
+    let goToGallery = () => {
+        const corner_url = document.location.protocol + '//' + document.location.host;
+        window.location.href = corner_url + '/gallery/';
+    }
+</script>
+
+{% endblock %}

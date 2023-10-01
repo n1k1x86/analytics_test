@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    <script src="/static/js/gallery_post_js/gallery_post_js.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div>
+        <div>
+            <p>Title: {{ post.title }}</p>
+            <p>Photo: <img src="{{ post.image }}" alt="{{ post.title }}"></p>
+            <p>Description: {{ post.description }}</p>
+            <p>Author: {{ post.author }}</p>
+            <p>Likes: <span id="post_{{ post.id }}_likes">{{ post.count_likes }}</span>
+                {% if not liked_post %}
+                    <button id="like_{{ post.id }}" onclick="likePost(this)">&#9825;</button></p>
+                {% else %}
+                    <button id="like_{{ post.id }}" onclick="cancelLikePost(this)">&#9829;</button></p>
+                {% endif %}
+        </div>
+        <div>
+            <label>
+                <textarea id="review_textarea"></textarea>
+            </label>
+        </div>
+        <div>
+            <button id="review_button" onclick="sendPostReview()">Leave review!</button>
+        </div>
+        <div id="reviews_container">
+            {% if post_reviews|length > 0 %}
+                {% for review in post_reviews %}
+                    <div id="review_{{ review.id }}">
+                        <p>
+                            {{ review.review_text }}
+                        </p>
+                        <p>by {{ review.author_name }}</p>
+                        {% if review.author == user_id %}
+                            <button id="review_delete_{{ review.id }}" onclick="deletePost(this)">delete post</button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <p>There are no comments yet :(</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
