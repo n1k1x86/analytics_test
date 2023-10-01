@@ -145,8 +145,8 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'server.log',
         },
-        'console':{
-            'class':'logging.StreamHandler'
+        'console': {
+            'class': 'logging.StreamHandler'
         }
     },
     'loggers': {

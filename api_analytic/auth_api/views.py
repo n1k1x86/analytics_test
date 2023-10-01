@@ -1,14 +1,31 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
+from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, render, redirect
 
 from .serializers import LoginSerializer
+from .forms import RegisterForm
+
+
+def sign_up(request):
+    if request.method == 'GET':
+        form = RegisterForm()
+        return render(request, 'register_page.html', {'form': form})
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('/home')
+        else:
+            return render(request, 'register_page.html', {'form': form})
 
 
 class LoginView(APIView):
@@ -43,4 +60,4 @@ class LogoutView(APIView):
     @staticmethod
     def post(request):
         logout(request)
-        return HttpResponseRedirect('/login')
+        return redirect('/login')
