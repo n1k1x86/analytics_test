@@ -30,6 +30,11 @@ let logOut = () => {
             'X-CSRFToken': cookie_value
         },
     }).then(function(response){
+        _paq.push(['resetUserId']);
+        _paq.push(['appendToTrackingUrl', 'new_visit=1']);
+        _paq.push(['trackPageView']);
+        _paq.push(['appendToTrackingUrl', '']);
+
         window.location.href = document.location.protocol + '//' + document.location.host + '/login/';
     }).catch(error => console.error('Error:', error));
 }
