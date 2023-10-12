@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  database:
+    build: .
+    network_mode: 'bridge'
+    environment:
+      MYSQL_HOST: "127.0.0.1"
+      MYSQL_PORT: "3306"
+      MYSQL_ROOT_PASSWORD: "pass"
+    ports:
+      - "3306:3306"
