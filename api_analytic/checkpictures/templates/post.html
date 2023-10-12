@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    <title>{{ post.title }}</title>
+{% endblock %}
+
 {% block extra_head %}
     <script src="/static/js/gallery_post_js/gallery_post_js.js"></script>
 {% endblock %}

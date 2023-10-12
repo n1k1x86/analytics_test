@@ -23,7 +23,7 @@ def sign_up(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('/home')
+            return redirect('/')
         else:
             return render(request, 'register_page.html', {'form': form})
 
@@ -46,7 +46,7 @@ class LoginView(APIView):
 
         if user:
             login(request, user)
-            return HttpResponseRedirect('/home')
+            return HttpResponseRedirect('/')
         else:
             error_msg = {'error': "Authentication error. Wrong password or username"}
             status_code = status.HTTP_403_FORBIDDEN

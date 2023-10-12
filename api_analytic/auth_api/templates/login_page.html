@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load rest_framework %}
 
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+{% block extra_head %}
+    <script src="/static/js/login_page_js/login_page_js.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <form method="POST" id="id-login-form" class="panel-body">
@@ -8,5 +16,7 @@
             {% render_form serializer %}
             <input type="submit" value="Sign In">
         </form>
+        <button onClick="goToRegister()">Sign Up</button>
     </div>
+
 {% endblock %}
