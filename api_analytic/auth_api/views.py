@@ -9,13 +9,17 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
 from django.shortcuts import render, redirect
 
+from mixpanel import Mixpanel
+
 from .serializers import LoginSerializer
 from .forms import RegisterForm
+from mixpanel_tracking import event_to_track
 
 
 def sign_up(request):
     if request.method == 'GET':
         form = RegisterForm()
+        event_to_track(request, 'Register Page View', properties={})
         return render(request, 'register_page.html', {'form': form})
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -24,6 +28,9 @@ def sign_up(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
+
+            event_to_track(request, 'Signed Up', properties={})
+
             return redirect('/')
         else:
             return render(request, 'register_page.html', {'form': form})
@@ -34,6 +41,8 @@ class LoginView(APIView):
     template_name = 'login_page.html'
 
     def get(self, request):
+        event_to_track(request, 'Login Page View', properties={})
+
         return Response({}, template_name=self.template_name)
 
     @staticmethod
@@ -45,6 +54,9 @@ class LoginView(APIView):
 
         if user:
             login(request, user)
+
+            event_to_track(request, 'Signed In', properties={})
+
             return JsonResponse(data={'username': username, "status": 200}, status=status.HTTP_200_OK)
         else:
             error_msg = {'error': "Authentication error. Wrong password or username", "status": 403}
@@ -58,5 +70,6 @@ class LogoutView(APIView):
 
     @staticmethod
     def post(request):
+        event_to_track(request, 'Logout', properties={})
         logout(request)
         return redirect('/login')
