@@ -75,7 +75,7 @@ WSGI_APPLICATION = "api_analytic.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+'''
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -87,6 +87,13 @@ DATABASES = {
         "OPTIONS": {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
+    }
+}
+'''
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
     }
 }
 
@@ -118,6 +125,8 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+
+LOGIN_REDIRECT_URL = '/'
 
 USE_TZ = True
 

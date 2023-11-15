@@ -13,3 +13,13 @@ run django application:
 run matomo
 
 1) exec: docker run -d -p 80:80 --link {my_sql_container_name}:matomo_db -v matomo:/var/www/html matomo
+
+#third run posthog
+
+1) install posthog
+2) configure docker-compose.* files
+3) run docker containers for checking
+4) then select sqlite db for proj
+5) create data for proj
+6) connect posthog to proj
+7) test it

@@ -1,3 +1,4 @@
+/*
 window.addEventListener("DOMContentLoaded", function () {
     let signInBtn = document.getElementById('sign_in_btn');
 
@@ -33,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
         }).catch(error => console.error('Error:', error));
     })
 })
-
+*/
 
 let goToRegister = () => {
         const corner_url = document.location.protocol + '//' + document.location.host;

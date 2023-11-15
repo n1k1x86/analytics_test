@@ -14,7 +14,6 @@ from rest_framework import status
 from .serializers import PostSerializer, PostReviewSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from mixpanel_tracking import event_to_track
 
 logger = logging.getLogger('default_logger')
 
@@ -25,7 +24,6 @@ class HomePageView(APIView):
     @staticmethod
     def get(request):
         if request.user.is_authenticated:
-            event_to_track(request, 'Home Page View', properties={})
             return Response(template_name='home.html')
         else:
             return Response(template_name='403_not_authorised.html')
@@ -39,7 +37,6 @@ class GalleryPageView(APIView):
         if request.user.is_authenticated:
             queryset = Post.objects.all()
             serialized_posts = PostSerializer(queryset, many=True).data
-            event_to_track(request, 'Gallery Page View', properties={})
             return Response({'posts': serialized_posts,
                              'template_name': 'gallery.html'}, template_name='gallery.html')
         return Response(template_name='403_not_authorised.html')
@@ -64,7 +61,6 @@ class GalleryPostView(viewsets.ViewSet):
             post_reviews = PostReview.objects.filter(post=post)
             serialized_post_reviews = PostReviewSerializer(post_reviews, many=True).data
             serialized_post = PostSerializer(post).data
-            event_to_track(request, 'Post Page View', properties={})
             return Response({'post': serialized_post, 'post_reviews': serialized_post_reviews,
                                   'user_id': current_user_id, 'liked_post': liked_post}, template_name='post.html')
         return Response(template_name='403_not_authorised.html')
@@ -92,8 +88,6 @@ class GalleryPostView(viewsets.ViewSet):
             post.count_likes += 1
             post.save()
 
-            event_to_track(request, 'User Like Post', properties={})
-
             return JsonResponse(data={'likes': post.count_likes, 'post_id': post_id}, status=status.HTTP_200_OK)
 
         return Response(template_name='403_not_authorised.html')
@@ -113,8 +107,6 @@ class GalleryPostReview(viewsets.ViewSet):
             new_review = PostReview.objects.create(post=reviewed_post, author=reviewed_user, review_text=request.data['review_text'])
             new_review.save()
 
-            event_to_track(request, 'User Create Review', properties={})
-
             return Response({
                 'review_id': new_review.id,
                 'review_text': new_review.review_text,
@@ -128,8 +120,6 @@ class GalleryPostReview(viewsets.ViewSet):
             review_id = request.data['review_id']
             review_obj = PostReview.objects.get(pk=review_id)
             review_obj.delete()
-
-            event_to_track(request, 'User Delete Review', properties={})
 
             return Response({}, status=status.HTTP_200_OK)
         return Response(template_name='403_not_authorised.html')

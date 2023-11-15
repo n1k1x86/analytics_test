@@ -11,13 +11,13 @@
 
 {% block content %}
     <div class="container">
-        {% csrf_token %}
-        <label for="username_input"></label><input id="username_input" type="text" placeholder="username">
-        <br>
-        <label for="password_input"></label><input id="password_input" type="password" placeholder="password">
-        <br>
-        <button id="sign_in_btn">Sign In</button>
-        <button onclick="goToRegister()">Sign Up</button>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            <h2>Login</h2>
+            {{form.as_p}}
+            <input type="submit" value="Login" />
+        </form>
+            <button onclick="goToRegister()">Sign Up</button>
     </div>
 
 {% endblock %}
